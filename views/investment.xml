@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="invest_list_action">
+        <field name="name">Investments</field>
+        <field name="res_model">investment.invest</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first invest
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="invest_tree_view">
+        <field name="name">invest.tree</field>
+        <field name="model">investment.invest</field>
+        <field name="arch" type="xml">
+            <!--tree es la vista-->
+            <tree string="Vista de inversiones">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="invest_icon" widget="image"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="invest_search_view">
+        <field name="name">invest.search</field>
+        <field name="model">investment.invest</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="invest_form_view">
+        <field name="name">invest.form</field>
+        <field name="model">investment.invest</field>
+        <field name="arch" type="xml">
+            <form string="Invest Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="invest_icon" widget="image" style="width:10%"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Acerca de ">
+                            Esto es para ver que se pueden añadir más de una pestaña
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="main_investment_menu" name="Investment"/>
+    <menuitem id="investment_menu" name="Investment" parent="main_investment_menu"/>
+    <menuitem id="investments_menu" name="Investment" parent="investment_menu" action="invest_list_action"/>
+</odoo>
