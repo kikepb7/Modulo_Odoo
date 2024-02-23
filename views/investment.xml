@@ -1,65 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record model="ir.actions.act_window" id="invest_list_action">
-        <field name="name">Investments</field>
-        <field name="res_model">investment.invest</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Create the first invest
-            </p>
-        </field>
-    </record>
+    <record model="ir.actions.act_window" id="stock_list_action">
+    <field name="name">Acciones</field>
+    <field name="res_model">investment.stock</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Introduce la primera acción</p>
+    </field>
+</record>
 
-    <record model="ir.ui.view" id="invest_tree_view">
-        <field name="name">invest.tree</field>
-        <field name="model">investment.invest</field>
-        <field name="arch" type="xml">
-            <!--tree es la vista-->
-            <tree string="Vista de inversiones">
-                <field name="name"/>
-                <field name="description"/>
-                <field name="invest_icon" widget="image"/>
-            </tree>
-        </field>
-    </record>
+<record model="ir.ui.view" id="stock_tree_view">
+    <field name="name">stock.tree</field>
+    <field name="model">investment.stock</field>
+    <field name="arch" type="xml">
+        <tree string="Todas las acciones">
+            <field name="name"/>
+            <field name="ticket"/>
+            <field name="description"/>
+            <field name="stock_icon" widget="image"/>
+            <field name="codigo"/>
+        </tree>
+    </field>
+</record>
 
-    <record model="ir.ui.view" id="invest_search_view">
-        <field name="name">invest.search</field>
-        <field name="model">investment.invest</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="name"/>
-                <field name="description"/>
-            </search>
-        </field>
-    </record>
+<record model="ir.ui.view" id="stock_search_view">
+    <field name="name">stock.search</field>
+    <field name="model">investment.stock</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="description"/>
+        </search>
+    </field>
+</record>
 
-    <record model="ir.ui.view" id="invest_form_view">
-        <field name="name">invest.form</field>
-        <field name="model">investment.invest</field>
-        <field name="arch" type="xml">
-            <form string="Invest Form">
-                <sheet>
-                    <group>
-                        <field name="name"/>
+<record model="ir.ui.view" id="stock_form_view">
+    <field name="name">stock.form</field>
+    <field name="model">investment.stock</field>
+    <field name="arch" type="xml">
+        <form string="Formulario de la acción">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="ticket"/>
+                    <field name="description"/>
+                    <field name="user_id"/>
+                    <field name="stock_icon" widget="image" style="width:20%"/>
+                </group>
+                <notebook>
+                    <page string="Descripción">
                         <field name="description"/>
-                        <field name="invest_icon" widget="image" style="width:10%"/>
+                    </page>
+                    <page string="Inversion">
+                        <field name="invest_ids">
+                            <tree string="Inversiones registradas">
+                                <field name="name"/>
+                                <field name="investor_id"/>
+                                <field name="start_date"/>
+                                <field name="taken_stocks" widget="progressbar"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<menuitem id="main_investment_menu" name="Investment Capital"/>
+<menuitem id="investment_menu" name="Investment Capital" parent="main_investment_menu"/>
+<menuitem id="stocks_menu" name="Stocks" parent="investment_menu" action="stock_list_action"/>
+
+<record model="ir.actions.act_window" id="invest_list_action">
+    <field name="name">Invests</field>
+    <field name="res_model">investment.invest</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<record model="ir.ui.view" id="session_form_view">
+    <field name="name">invest.form</field>
+    <field name="model">investment.invest</field>
+    <field name="arch" type="xml">
+        <form string="Formulario de inversión">
+            <sheet>
+                <group>
+                    <group string="General">
+                        <field name="name"/>
+                        <field name="investor_id"/>
                     </group>
-                    <notebook>
-                        <page string="Description">
-                            <field name="description"/>
-                        </page>
-                        <page string="Acerca de ">
-                            Esto es para ver que se pueden añadir más de una pestaña
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record>
+                    <group string="Programación">
+                        <field name="start_date"/>
+                        <field name="stock_number"/>
+                    </group>
+                    <label for="attendee_ids"/>
+                    <field name="attendee_ids"/>
+                    <field name="taken_stocks" widget="progressbar"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
 
-
-    <menuitem id="main_investment_menu" name="Investment"/>
-    <menuitem id="investment_menu" name="Investment" parent="main_investment_menu"/>
-    <menuitem id="investments_menu" name="Investment" parent="investment_menu" action="invest_list_action"/>
+<menuitem id="invest_menu" name="Inversiones" parent="investment_menu" action="invest_list_action"/>
 </odoo>
