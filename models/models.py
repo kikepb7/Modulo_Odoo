@@ -22,6 +22,21 @@ class Stock(models.Model):
             accion.codigo = f"{accion.name} "
 
 
+class RealState(models.Model):
+    _name = 'investment.realState'
+    address = fields.Char(string = "Dirección", required = True, help = "Dirección de la propiedad")
+    price = fields.Float(string = "Precio", required = True, help = "Precio de la propiedad")
+    description = fields.Text()
+    realState_icon = fields.Image(string = "Imagen", help = "Imagen de la propiedad")
+
+class Crypto(models.Model):
+    _name = 'investment.crypto'
+    name = fields.Char(string = "Nombre de la criptomoneda", required = True, help = "Nombre de la criptomoneda")
+    crypto_ticket = fields.Char(string = "Ticket", required = True, help = "Ticket de la acción")
+    description = fields.Text()
+    crypto_icon = fields.Image(string = "Icono", help = "Icono de la criptomoneda")
+
+
 class Invest(models.Model):
     _name = 'investment.invest'
     name = fields.Char(string = "Nombre de la inversión", required = True, help = "Nombre de la inversión")
@@ -44,21 +59,3 @@ class Invest(models.Model):
                 s.taken_stocks = 0.0
             else:
                 s.taken_stocks = 100.0 * len(s.attendee_ids) / s.stock_number
-
-
-
-
-
-# class investment(models.Model):
-#     _name = 'investment.investment'
-#     _description = 'investment.investment'
-
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
